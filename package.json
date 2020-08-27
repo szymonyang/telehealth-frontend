@@ -1,0 +1,27 @@
+{
+    "name": "telehealth-frontend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "format": "prettier --write \"src/**/*.{js,jsx}\"",
+        "lint": "eslint \"src/**/*.{js,jsx}\" "
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/szymonyang/telehealth-frontend.git"
+    },
+    "keywords": [],
+    "author": "Simon Yang",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/szymonyang/telehealth-frontend/issues"
+    },
+    "homepage": "https://github.com/szymonyang/telehealth-frontend#readme",
+    "description": "",
+    "devDependencies": {
+        "eslint": "^7.7.0",
+        "eslint-config-prettier": "^6.11.0",
+        "prettier": "^2.1.1"
+    }
+}
