@@ -14,15 +14,22 @@ class WebSocketService {
     }
 
     connect() {
-        const path = "ws://127.0.0.1:8000/ws/chat/test";
+        const path = "ws://127.0.0.1:8000/ws/chat/test/";
         this.socketRef = new WebSocket(path);
 
         this.socketRef.onopen = () => {
-            console.log("Websocket open");
+            console.log("WebSocket open");
         };
 
+        this.socketNewMessage(
+            JSON.stringify({
+                command: "fetch_messages",
+            })
+        );
+
         this.socketRef.onmessage = (e) => {
-            // send socket message
+            //sending a message
+            this.socketNewMessage(e.data);
         };
 
         this.socketRef.onerror = (e) => {
@@ -30,27 +37,27 @@ class WebSocketService {
         };
 
         this.socketRef.onclose = () => {
-            console.log("Websocket is closed");
+            console.log("WebSocket closed let's reopen");
             this.connect();
         };
     }
 
     socketNewMessage(data) {
-        const parseData = JSON.parseData(data);
-        const command = parseData.command;
+        const parsedData = JSON.parse(data);
+        const command = parsedData.command;
         if (Object.keys(this.callbacks).length === 0) {
             return;
         }
         if (command === "messages") {
-            this.callbacks[command](parseData.messages);
+            this.callbacks[command](parsedData.messages);
         }
         if (command === "new_message") {
-            this.callbacks[command](parseData.message);
+            this.callbacks[command](parsedData.message);
         }
     }
 
     fetchMessages(username) {
-        this.sendMessage({ command: "fetch_message", username: username });
+        this.sendMessage({ command: "fetch_messages", username: username });
     }
 
     newChatMessage(message) {
@@ -61,8 +68,8 @@ class WebSocketService {
         });
     }
 
-    addCallbacks(messageCallback, newMessageCallback) {
-        this.callbacks["messages"] = messageCallback;
+    addCallbacks(messagesCallback, newMessageCallback) {
+        this.callbacks["messages"] = messagesCallback;
         this.callbacks["new_message"] = newMessageCallback;
     }
 
@@ -74,21 +81,8 @@ class WebSocketService {
         }
     }
 
-    waitForSocketConnections(callback) {
-        const socket = this.socketRef;
-        const recursion = this.waitForSocketConnections;
-        setTimeout(function () {
-            if (socket.readyState === 1) {
-                console.log("connection is secure");
-                if (callback != null) {
-                    callback();
-                }
-                return;
-            } else {
-                console.log("Waiting for conenction...");
-                recursion(callback);
-            }
-        }, 1);
+    state() {
+        return this.socketRef.readyState;
     }
 }
 
