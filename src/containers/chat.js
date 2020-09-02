@@ -4,10 +4,12 @@ import Sidepanel from "./Sidepanel/Sidepanel";
 import WebSocketInstance from "../websocket";
 
 class Chat extends React.Component {
-    // this 的作用域
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            message: "",
+            messages: [],
+        };
 
         this.waitForSocketConnection(() => {
             WebSocketInstance.addCallbacks(
@@ -32,7 +34,6 @@ class Chat extends React.Component {
         }, 100);
     }
 
-    // ... operator
     addMessage(message) {
         this.setState({ messages: [...this.state.messages, message] });
     }
@@ -50,7 +51,8 @@ class Chat extends React.Component {
     sendMessageHandler = (e) => {
         e.preventDefault();
         const messageObject = {
-            from: "admin",
+            // from: "admin",
+            from: "boot",
             content: this.state.message,
         };
         WebSocketInstance.newChatMessage(messageObject);
@@ -60,7 +62,8 @@ class Chat extends React.Component {
     };
 
     renderMessages = (messages) => {
-        const currentUser = "admin";
+        // const currentUser = "admin";
+        const currentUser = "boot";
         return messages.map((message, i) => (
             <li
                 key={message.id}

@@ -34,7 +34,9 @@ const Sidepanel = (props) => (
                     </ul>
                 </div>
                 <div id="expanded">
-                    <label htmlFor="twitter">
+                    {/* Warning: Failed prop type: You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field
+                     should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`. */}
+                    {/* <label htmlFor="twitter">
                         <i
                             className="fa fa-facebook fa-fw"
                             aria-hidden="true"
@@ -54,7 +56,7 @@ const Sidepanel = (props) => (
                             aria-hidden="true"
                         ></i>{" "}
                     </label>
-                    <input name="twitter" type="text" value="mike.ross" />
+                    <input name="twitter" type="text" value="mike.ross" /> */}
                 </div>
             </div>
         </div>
